@@ -17,7 +17,7 @@
       // ↓ 必ず定義
       function getProgram(truth = false) {
         if (truth) return editor.getValue();
-        return editor.getValue().replace(/(?!\D)15(?<!\D)/, 'int(input())');
+        return editor.getValue().replace(/15/, 'int(input())');
       }
       // ↑ 必ず定義
 
