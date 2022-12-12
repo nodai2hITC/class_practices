@@ -36,6 +36,11 @@ sys.stdin = _in
 _out = io.StringIO()
 sys.stdout = sys.stderr = _out
 `, { globals: globals});
-  pyodide.runPython(program, { globals: pyodide.toPy({}) });
+  pyodide.runPython(`
+import sys
+def input(s=''):
+    return sys.stdin.readline()
+
+` + program, { globals: pyodide.toPy({}) });
   return pyodide.runPython("_out.getvalue()", { globals: globals });
 };
