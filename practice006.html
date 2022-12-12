@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script src="python.js"></script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      function getProgram(truth = false) {
+        return editor.getValue();
+      }
+      // ↑ 必ず定義
+
+      // OnBrowserJudge.pythonPackages = ["numpy", "scipy", "scikit-learn", "networkx"];
+
+      OnBrowserJudge.dict.enabled_button = "▶実行";
+      OnBrowserJudge.dict.disabled_button = "実行中";
+      OnBrowserJudge.dict.case_name = "ケース名";
+      OnBrowserJudge.dict.status = "結果";
+      OnBrowserJudge.dict.exec_time = "実行時間";
+      OnBrowserJudge.dict.copy = "コピー";
+      OnBrowserJudge.dict.copied = "コピーしました";
+      OnBrowserJudge.dict.AC = "正解";
+      OnBrowserJudge.dict.WA = "不正解";
+      OnBrowserJudge.dict.RE = "エラー";
+      OnBrowserJudge.dict.WJ = '<img src="wj.gif" alt="WJ" />';
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = function() { MicroModal.show("modal-1"); }
+
+      // OnBrowserJudge.assert_equal = function(expected, actual) { return expected == actual; };
+    </script>
+    <title>実習6</title>
+  </head>
+
+  <body>
+    <h1>実習6</h1>
+    <hr />
+
+    <h2>問題文</h2>
+    <p>BMI は、「 10000 × 体重[kg] ÷（身長[cm] の 2 乗）」で求めます。</p>
+    <p>身長と体重を整数で入力してもらい、そこから BMI を計算して、18.5 以上 25 未満であれば『適正』、そうでなければ『適正外』と表示するプログラムを書きましょう。</p>
+
+    <pre id="testcase1_input"  class="testcase">160
+60</pre>
+    <pre id="testcase1_output" class="testcase">適正</pre>
+    <pre id="testcase2_input"  class="testcase">160
+47</pre>
+    <pre id="testcase2_output" class="testcase">適正外</pre>
+    <pre id="testcase3_input"  class="testcase">160
+70</pre>
+    <pre id="testcase3_output" class="testcase">適正外</pre>
+    <pre id="testcase4_input"  class="testcase">100
+25</pre>
+    <pre id="testcase4_output" class="testcase">適正外</pre>
+    <pre id="testcase5_input"  class="testcase">200
+74</pre>
+    <pre id="testcase5_output" class="testcase">適正</pre>
+
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run" disabled>準備中</button> 
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🎉</p>
+            <p><a href="./practice007.html">実習 7 へ進む</a></p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <script>
+
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "python",
+    indentUnit: 4,
+});
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add");
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input");
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess");
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.run();
+    }
+});
+
+MicroModal.init();
+
+    </script>
+  </body>
+</html>
