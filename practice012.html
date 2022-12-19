@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script src="python.js"></script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      function getProgram(truth = false) {
+        if (truth) return editor.getValue();
+        if (! editor.getValue().match(/break/)) return "None";
+        return `def input(prompt=''):
+    return sys.stdin.readline()
+
+a = [1, 3, 4, 6, 7, 15, 16, 17, 18]
+` + editor.getValue().replace(/a\s*=\s*\[[^\]]+\]/, '');
+      }
+      // ↑ 必ず定義
+
+      // OnBrowserJudge.pythonPackages = ["numpy", "scipy", "scikit-learn", "networkx"];
+
+      OnBrowserJudge.dict.enabled_button = "▶実行";
+      OnBrowserJudge.dict.disabled_button = "実行中";
+      OnBrowserJudge.dict.case_name = "ケース名";
+      OnBrowserJudge.dict.status = "結果";
+      OnBrowserJudge.dict.exec_time = "実行時間";
+      OnBrowserJudge.dict.copy = "コピー";
+      OnBrowserJudge.dict.copied = "コピーしました";
+      OnBrowserJudge.dict.AC = "正解";
+      OnBrowserJudge.dict.WA = "不正解";
+      OnBrowserJudge.dict.RE = "エラー";
+      OnBrowserJudge.dict.WJ = '<img src="wj.gif" alt="WJ" />';
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = function() { MicroModal.show("modal-1"); }
+
+      // OnBrowserJudge.assert_equal = function(expected, actual) { return expected == actual; };
+    </script>
+    <title>実習12</title>
+  </head>
+
+  <body>
+    <h1>実習12</h1>
+    <hr />
+
+    <h2>問題文</h2>
+    <p>いくつかの数値データを扱うリスト <code>a</code> が用意してあるとします。最初にキーボードから数値（整数）を 1 つ入力してもらい、その数値がリスト内に1つでもあれば「Yes」を、無ければ「No」を表示するプログラムを書いてみましょう。（<code>break</code> を使ってください。）</p>
+    <p> </p>
+    <pre id="testcase1_input"  class="testcase">2</pre>
+    <pre id="testcase1_output" class="testcase">No</pre>
+
+    <pre id="testcase2_input"  class="testcase">6</pre>
+    <pre id="testcase2_output" class="testcase">Yes</pre>
+
+    <pre id="testcase3_input"  class="testcase">13</pre>
+    <pre id="testcase3_output" class="testcase">No</pre>
+
+    <pre id="testcase4_input"  class="testcase">19</pre>
+    <pre id="testcase4_output" class="testcase">No</pre>
+
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run" disabled>準備中</button> 
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🎉</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <script>
+
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "python",
+    indentUnit: 4,
+});
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add");
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input");
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess");
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.run();
+    }
+});
+
+MicroModal.init();
+
+    </script>
+  </body>
+</html>
