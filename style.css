@@ -43,7 +43,7 @@ button.copy {
     float: right;
 }
 
-pre.testcase {
+.testcase {
     display: none;
 }
 
@@ -88,6 +88,10 @@ pre.testcase {
     font-weight: bold;
     line-height: 12px;
     padding: 2px 5px 2px 5px;
+}
+
+#result span.wj {
+    background-color: rgb(128, 128, 128);
 }
 
 #result span.ac {

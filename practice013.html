@@ -3,42 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <!-- ↓ 書き換え不可 -->
     <script src="onbrowserjudge.js"></script>
-    <script src="python.js"></script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
     <!-- ↑ 書き換え不可 -->
     <script>
       // ↓ 必ず定義
-      function getProgram(truth = false) {
-        if (truth) return editor.getValue();
-        return editor.getValue().replace(/15/, 'int(input())');
-      }
+      OnBrowserJudge.getProgram = () => editor.getValue()
       // ↑ 必ず定義
 
-      // OnBrowserJudge.pythonPackages = ["numpy", "scipy", "scikit-learn", "networkx"];
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
 
-      OnBrowserJudge.dict.enabled_button = "▶実行";
-      OnBrowserJudge.dict.disabled_button = "実行中";
-      OnBrowserJudge.dict.case_name = "ケース名";
-      OnBrowserJudge.dict.status = "結果";
-      OnBrowserJudge.dict.exec_time = "実行時間";
-      OnBrowserJudge.dict.copy = "コピー";
-      OnBrowserJudge.dict.copied = "コピーしました";
-      OnBrowserJudge.dict.AC = "正解";
-      OnBrowserJudge.dict.WA = "不正解";
-      OnBrowserJudge.dict.RE = "エラー";
-      OnBrowserJudge.dict.WJ = '<img src="wj.gif" alt="WJ" />';
+      OnBrowserJudge.dict.ready = "▶実行"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
 
       // ↓ 正解時に実行する関数
-      OnBrowserJudge.congratulations = function() { MicroModal.show("modal-1"); }
-
-      // OnBrowserJudge.assert_equal = function(expected, actual) { return expected == actual; };
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
     </script>
     <title>実習13</title>
   </head>
@@ -57,7 +60,7 @@
     <textarea id="txt-editor"></textarea>
     <p>
       <!-- ↓ button#run は必ず用意 -->
-      <button id="run" disabled>準備中</button> 
+      <button id="run" disabled>準備中</button>
       <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
     </p>
     <p>実行結果:</p>
@@ -81,27 +84,32 @@
         </div>
       </div>
     </div>
-    <script>
 
+    <script>
 const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
     lineNumbers: true,
     mode: "python",
-    indentUnit: 4,
-});
+    indentUnit: 4
+})
 editor.setOption("extraKeys", {
     "Tab": function(cm) {
-        if (cm.somethingSelected()) cm.indentSelection("add");
-        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input");
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
     },
     "Shift-Tab": function(cm) {
-        cm.execCommand("indentLess");
+        cm.execCommand("indentLess")
     },
     "Ctrl-Enter": function(cm) {
-        OnBrowserJudge.run();
+        OnBrowserJudge.runButtonPressed()
     }
-});
+})
 
-MicroModal.init();
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
 
     </script>
   </body>
