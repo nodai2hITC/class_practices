@@ -53,7 +53,7 @@ button.copy {
     height: 20em;
     resize: vertical;
     font-size: 16px;
-    font-family: "Consolas", "Menlo", monospace;
+    font-family: "Consolas", "Menlo", monospace !important;
 }
 
 
