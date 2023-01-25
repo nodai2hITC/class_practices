@@ -11,3 +11,6 @@
 - [実習 11](https://nodai2hitc.github.io/class_practices/practice011.html)
 - [実習 12](https://nodai2hitc.github.io/class_practices/practice012.html)
 - [実習 13](https://nodai2hitc.github.io/class_practices/practice013.html)
+- [実習 14-1](https://nodai2hitc.github.io/class_practices/practice014_1.html)
+- [実習 14-2](https://nodai2hitc.github.io/class_practices/practice014_2.html)
+- [実習 20](https://nodai2hitc.github.io/class_practices/practice020.html)
