@@ -37,7 +37,7 @@
 
       // OnBrowserJudge.timeLimit = 2000
 
-      OnBrowserJudge.process = (program, casename, input) => program + "\n\nprint(guusuu(list(map(int, input().split()))))"
+      OnBrowserJudge.process = (program, casename, input) => program + "\n\nprint(kisuugoukei(list(map(int, input().split()))))"
       // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
 
       // ↓ 正解時に実行する関数
@@ -47,21 +47,21 @@
   </head>
 
   <body>
-    <h1>実習20</h1>
+    <h1>実習20B</h1>
     <hr />
 
     <h2>問題文</h2>
-    <p>数値データを扱うリストを入れると、そのリスト内の偶数の個数を数えて返す関数 <code>guusuu</code> を書いてみましょう。</p>
+    <p>数値データを扱うリストを入れると、リスト内に含まれる「奇数」だけの合計（個数ではない！）を返す関数 <code>kisuugoukei</code> を書いてみましょう。</p>
     <p>※ 関数のみを書いてください。余計なものが書かれていると不正解にされる場合があります。</p>
     <p> </p>
     <pre id="testcase1_input"  class="testcase">599 912 634 709 762 826 386 218 722 105</pre>
-    <pre id="testcase1_output" class="testcase">7</pre>
+    <pre id="testcase1_output" class="testcase">1413</pre>
 
     <pre id="testcase2_input"  class="testcase">18 99 36 35 46 49 4 80 54 31 52 15 16 93 95 52 48 29 33 15</pre>
-    <pre id="testcase2_output" class="testcase">10</pre>
+    <pre id="testcase2_output" class="testcase">494</pre>
 
     <pre id="testcase3_input"  class="testcase">291 628 425 658 768 419 478 273 712 883 104 486 528 600 628 329 503 267 380 363 675 676 955 984 995 840 319 746 529 973</pre>
-    <pre id="testcase3_output" class="testcase">15</pre>
+    <pre id="testcase3_output" class="testcase">8199</pre>
 
     <textarea id="txt-editor"></textarea>
     <p>
@@ -83,7 +83,7 @@
           </header>
           <main class="modal__content" id="modal-1-content">
             <p class="cracker">🎉</p>
-            <p><a href="./practice020b.html">実習 20B へ進む</a></p>
+            <p><a href="./practice020c.html">実習 20C へ進む</a></p>
           </main>
           <footer class="modal__footer">
             <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>

@@ -37,7 +37,7 @@
 
       // OnBrowserJudge.timeLimit = 2000
 
-      OnBrowserJudge.process = (program, casename, input) => program + "\n\nprint(guusuu(list(map(int, input().split()))))"
+      OnBrowserJudge.process = (program, casename, input) => program + "\n\nprint(saishou(list(map(int, input().split()))))"
       // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
 
       // ↓ 正解時に実行する関数
@@ -51,17 +51,21 @@
     <hr />
 
     <h2>問題文</h2>
-    <p>数値データを扱うリストを入れると、そのリスト内の偶数の個数を数えて返す関数 <code>guusuu</code> を書いてみましょう。</p>
+    <p>数値データを扱うリストを入れると、リスト内の数値のうち「もっとも小さな数値」が何番目にあるかを返す関数 <code>saishou</code> を書いてみましょう。</p>
+    <p>なお、一番最初は「0 番目」とします。（返すのは番号の数値だけで、「番目」などの文字列は返さないでください。）また、最小値が複数ある場合は一番最初の番号を返してください。</p>
     <p>※ 関数のみを書いてください。余計なものが書かれていると不正解にされる場合があります。</p>
     <p> </p>
     <pre id="testcase1_input"  class="testcase">599 912 634 709 762 826 386 218 722 105</pre>
-    <pre id="testcase1_output" class="testcase">7</pre>
+    <pre id="testcase1_output" class="testcase">9</pre>
 
     <pre id="testcase2_input"  class="testcase">18 99 36 35 46 49 4 80 54 31 52 15 16 93 95 52 48 29 33 15</pre>
-    <pre id="testcase2_output" class="testcase">10</pre>
+    <pre id="testcase2_output" class="testcase">6</pre>
 
     <pre id="testcase3_input"  class="testcase">291 628 425 658 768 419 478 273 712 883 104 486 528 600 628 329 503 267 380 363 675 676 955 984 995 840 319 746 529 973</pre>
-    <pre id="testcase3_output" class="testcase">15</pre>
+    <pre id="testcase3_output" class="testcase">10</pre>
+
+    <pre id="testcase4_input"  class="testcase">1 599 912 634 709 762 826 386 218 722 105</pre>
+    <pre id="testcase4_output" class="testcase">0</pre>
 
     <textarea id="txt-editor"></textarea>
     <p>
@@ -83,7 +87,6 @@
           </header>
           <main class="modal__content" id="modal-1-content">
             <p class="cracker">🎉</p>
-            <p><a href="./practice020b.html">実習 20B へ進む</a></p>
           </main>
           <footer class="modal__footer">
             <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
